@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
 import Badge from '../common/Badge';
-import ConfirmDialog from '../components/common/ConfirmDialog';
+import ConfirmDialog from '../common/ConfirmDialog';
 import { formatDueDate, truncate, isOverdue } from '../../utils/formatters';
 import { ROUTES } from '../../utils/constants';
 import { useTaskContext } from '../../context/TaskContext';

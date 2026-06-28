@@ -23,6 +23,13 @@ class QueryBuilder {
     const excludedFields = ['page', 'sort', 'limit', 'fields', 'search'];
     excludedFields.forEach((el) => delete queryObj[el]);
 
+    // Remove empty/falsy values so we don't query for empty strings (like status="" or priority="")
+    Object.keys(queryObj).forEach((key) => {
+      if (queryObj[key] === '' || queryObj[key] === undefined || queryObj[key] === null) {
+        delete queryObj[key];
+      }
+    });
+
     // Convert comparison operators (gte, gt, lte, lt) to MongoDB operators starting with $
     let queryStr = JSON.stringify(queryObj);
     queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);

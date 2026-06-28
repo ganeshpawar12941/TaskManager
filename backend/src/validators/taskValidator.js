@@ -115,19 +115,33 @@ const deleteTaskValidator = [mongoIdValidator('params', 'id')];
  */
 const listTasksValidator = [
   query('page')
-    .optional()
+    .optional({ values: 'falsy' })
     .isInt({ min: 1 })
     .withMessage('Page must be a positive integer')
     .toInt(),
   query('limit')
-    .optional()
+    .optional({ values: 'falsy' })
     .isInt({ min: 1, max: 100 })
     .withMessage('Limit must be between 1 and 100')
     .toInt(),
-  query('status').optional().isIn(TASK_STATUSES).withMessage(`Status must be one of: ${TASK_STATUSES.join(', ')}`),
-  query('priority').optional().isIn(TASK_PRIORITIES).withMessage(`Priority must be one of: ${TASK_PRIORITIES.join(', ')}`),
-  query('search').optional().trim().isLength({ max: 100 }).withMessage('Search term cannot exceed 100 characters'),
-  query('sort').optional().trim().isLength({ max: 100 }).withMessage('Sort parameter is too long'),
+  query('status')
+    .optional({ values: 'falsy' })
+    .isIn(TASK_STATUSES)
+    .withMessage(`Status must be one of: ${TASK_STATUSES.join(', ')}`),
+  query('priority')
+    .optional({ values: 'falsy' })
+    .isIn(TASK_PRIORITIES)
+    .withMessage(`Priority must be one of: ${TASK_PRIORITIES.join(', ')}`),
+  query('search')
+    .optional({ values: 'falsy' })
+    .trim()
+    .isLength({ max: 100 })
+    .withMessage('Search term cannot exceed 100 characters'),
+  query('sort')
+    .optional({ values: 'falsy' })
+    .trim()
+    .isLength({ max: 100 })
+    .withMessage('Sort parameter is too long'),
 ];
 
 module.exports = {
