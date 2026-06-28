@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- SEO -->
+    <title>Task Tracker — Manage Your Work Efficiently</title>
+    <meta
+      name="description"
+      content="Task Tracker is a modern, full-stack task management application built with the MERN stack. Create, organize, filter, and track tasks with ease."
+    />
+    <meta name="keywords" content="task tracker, task management, to-do, productivity, MERN" />
+    <meta name="author" content="Task Tracker Team" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Task Tracker — Manage Your Work Efficiently" />
+    <meta
+      property="og:description"
+      content="A modern, full-stack task management application built with the MERN stack."
+    />
+    <meta property="og:image" content="/og-image.png" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Task Tracker" />
+    <meta name="twitter:description" content="Manage your tasks efficiently with Task Tracker." />
+
+    <!-- Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Theme: prevent flash of wrong theme -->
+    <script>
+      try {
+        const theme = localStorage.getItem('theme');
+        if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          document.documentElement.classList.add('dark');
+        }
+      } catch (_) {}
+    </script>
+  </head>
+  <body class="bg-gray-50 dark:bg-slate-900 text-gray-900 dark:text-gray-100 antialiased">
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
