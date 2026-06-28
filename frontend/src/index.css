@@ -16,9 +16,9 @@
 /* ─── CSS Custom Properties (Design Tokens) ───────────────────────────────── */
 @layer base {
   :root {
-    --color-primary:     #6366f1;
-    --color-primary-dark:#4f46e5;
-    --color-secondary:   #d946ef;
+    --color-primary:     #10b981;
+    --color-primary-dark:#059669;
+    --color-secondary:   #6366f1;
     --color-surface:     #ffffff;
     --color-bg:          #f8fafc;
     --color-border:      #e2e8f0;
@@ -33,7 +33,7 @@
 
     --shadow-card:    0 1px 3px rgba(0,0,0,0.07), 0 1px 2px rgba(0,0,0,0.06);
     --shadow-card-lg: 0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.06);
-    --shadow-glow:    0 0 20px rgba(99,102,241,0.3);
+    --shadow-glow:    0 0 20px rgba(16,185,129,0.3);
 
     --transition-fast:   150ms ease;
     --transition-normal: 250ms ease;

@@ -16,7 +16,9 @@ const mongoose = require('mongoose');
 const connectDB = async () => {
   try {
     const conn = await mongoose.connect(process.env.MONGODB_URI, {
-      // Modern Mongoose 7+ does not need deprecated options
+      // Fail fast if MongoDB is not reachable (5s timeout instead of 30s default)
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 10000,
     });
 
     console.log(`✅ MongoDB Connected: ${conn.connection.host}`);

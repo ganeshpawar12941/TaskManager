@@ -10,33 +10,32 @@ export default {
 
   theme: {
     extend: {
-      // ─── Color Palette ──────────────────────────────────────────────────
       colors: {
         primary: {
+          50:  '#ecfdf5',
+          100: '#d1fae5',
+          200: '#a7f3d0',
+          300: '#6ee7b7',
+          400: '#34d399',
+          500: '#10b981',  // Main primary (Emerald)
+          600: '#059669',
+          700: '#047857',
+          800: '#065f46',
+          900: '#064e3b',
+          950: '#022c22',
+        },
+        secondary: {
           50:  '#eef2ff',
           100: '#e0e7ff',
           200: '#c7d2fe',
           300: '#a5b4fc',
           400: '#818cf8',
-          500: '#6366f1',  // Main primary
+          500: '#6366f1',  // Main secondary (Indigo)
           600: '#4f46e5',
           700: '#4338ca',
           800: '#3730a3',
           900: '#312e81',
           950: '#1e1b4b',
-        },
-        secondary: {
-          50:  '#fdf4ff',
-          100: '#fae8ff',
-          200: '#f5d0fe',
-          300: '#f0abfc',
-          400: '#e879f9',
-          500: '#d946ef',  // Main secondary
-          600: '#c026d3',
-          700: '#a21caf',
-          800: '#86198f',
-          900: '#701a75',
-          950: '#4a044e',
         },
         surface: {
           light: '#ffffff',
@@ -97,7 +96,7 @@ export default {
       boxShadow: {
         'card':    '0 1px 3px 0 rgba(0,0,0,.07), 0 1px 2px -1px rgba(0,0,0,.07)',
         'card-lg': '0 4px 6px -1px rgba(0,0,0,.08), 0 2px 4px -2px rgba(0,0,0,.08)',
-        'glow':    '0 0 20px rgba(99,102,241,.35)',
+        'glow':    '0 0 20px rgba(16,185,129,.35)',
         'inner-lg': 'inset 0 2px 8px rgba(0,0,0,.06)',
       },
 
