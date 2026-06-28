@@ -1,9 +1,4 @@
-/**
- * src/config/db.js
- *
- * MongoDB connection configuration using Mongoose.
- * Handles connection events and retry logic.
- */
+
 
 'use strict';
 
@@ -21,21 +16,21 @@ const connectDB = async () => {
       socketTimeoutMS: 10000,
     });
 
-    console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
-    console.log(`📂 Database: ${conn.connection.name}`);
+    console.log(` MongoDB Connected: ${conn.connection.host}`);
+    console.log(` Database: ${conn.connection.name}`);
   } catch (error) {
-    console.error(`❌ MongoDB Connection Error: ${error.message}`);
-    console.warn('⚠️  Continuing server execution. Database operations will fail until connected.');
+    console.error(` MongoDB Connection Error: ${error.message}`);
+    console.warn('  Continuing server execution. Database operations will fail until connected.');
   }
 };
 
 // ─── Mongoose Connection Events ────────────────────────────────────────────────
 mongoose.connection.on('disconnected', () => {
-  console.warn('⚠️  MongoDB disconnected');
+  console.warn('  MongoDB disconnected');
 });
 
 mongoose.connection.on('reconnected', () => {
-  console.info('🔄 MongoDB reconnected');
+  console.info(' MongoDB reconnected');
 });
 
 module.exports = connectDB;

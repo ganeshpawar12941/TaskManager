@@ -1,20 +1,3 @@
-/**
- * src/components/common/ConfirmDialog.jsx
- *
- * Confirmation dialog that wraps Modal for destructive actions like deletion.
- *
- * Usage:
- *   <ConfirmDialog
- *     isOpen={showConfirm}
- *     onClose={() => setShowConfirm(false)}
- *     onConfirm={handleDelete}
- *     title="Delete Task"
- *     message="This action cannot be undone."
- *     confirmLabel="Delete"
- *     isLoading={deleting}
- *   />
- */
-
 import React from 'react';
 import Modal from './Modal';
 import LoadingSpinner from './LoadingSpinner';
@@ -27,20 +10,6 @@ const AlertIcon = () => (
   </div>
 );
 
-/**
- * ConfirmDialog Component
- *
- * @param {object} props
- * @param {boolean} props.isOpen
- * @param {Function} props.onClose
- * @param {Function} props.onConfirm
- * @param {string} [props.title='Are you sure?']
- * @param {string} [props.message]
- * @param {string} [props.confirmLabel='Confirm']
- * @param {string} [props.cancelLabel='Cancel']
- * @param {boolean} [props.isLoading=false]
- * @param {'danger'|'primary'} [props.variant='danger']
- */
 const ConfirmDialog = ({
   isOpen,
   onClose,

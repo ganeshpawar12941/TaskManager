@@ -1,19 +1,4 @@
-/**
- * src/utils/queryBuilder.js
- *
- * Utility class for building dynamic Mongoose query objects from
- * request query parameters. Supports filtering, sorting, pagination,
- * field selection, and full-text search.
- *
- * Usage:
- *   const features = new QueryBuilder(Task.find(), req.query)
- *     .filter()
- *     .search()
- *     .sort()
- *     .limitFields()
- *     .paginate();
- *   const tasks = await features.query;
- */
+
 
 'use strict';
 
@@ -41,7 +26,7 @@ class QueryBuilder {
     // Convert comparison operators (gte, gt, lte, lt) to MongoDB operators starting with $
     let queryStr = JSON.stringify(queryObj);
     queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
-    
+
     let finalQueryObj = JSON.parse(queryStr);
 
     // Support comma-separated tags filter or tag array filter

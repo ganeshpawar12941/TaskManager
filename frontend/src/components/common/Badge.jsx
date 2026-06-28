@@ -1,28 +1,8 @@
-/**
- * src/components/common/Badge.jsx
- *
- * Reusable badge/chip component for displaying status, priority, and tags.
- *
- * Usage:
- *   <Badge variant="status" value="completed" />
- *   <Badge variant="priority" value="high" />
- *   <Badge variant="tag" value="frontend" />
- */
-
 import React from 'react';
 import clsx from 'clsx';
 import { STATUS_BADGE_CLASSES, PRIORITY_BADGE_CLASSES, PRIORITY_DOT_COLORS } from '../../utils/constants';
 import { formatStatus, formatPriority } from '../../utils/formatters';
 
-/**
- * Badge Component
- *
- * @param {object} props
- * @param {'status'|'priority'|'tag'|'custom'} props.variant
- * @param {string} props.value - The value to display (e.g., 'completed', 'high', 'my-tag')
- * @param {string} [props.className]
- * @param {boolean} [props.showDot=false] - Show a colored dot before priority badges
- */
 const Badge = ({ variant, value, className = '', showDot = false }) => {
   if (variant === 'status') {
     return (
@@ -60,7 +40,6 @@ const Badge = ({ variant, value, className = '', showDot = false }) => {
     );
   }
 
-  // Custom badge
   return (
     <span className={clsx('badge', className)}>
       {value}

@@ -1,13 +1,3 @@
-/**
- * src/components/common/LoadingSpinner.jsx
- *
- * Reusable inline loading spinner with configurable size and color.
- *
- * Usage:
- *   <LoadingSpinner size="sm" />
- *   <LoadingSpinner size="lg" color="white" />
- */
-
 import React from 'react';
 import clsx from 'clsx';
 
@@ -27,15 +17,6 @@ const COLOR_CLASSES = {
   red:     'border-red-500',
 };
 
-/**
- * LoadingSpinner
- *
- * @param {object} props
- * @param {'xs'|'sm'|'md'|'lg'|'xl'} [props.size='md']
- * @param {'primary'|'white'|'gray'|'green'|'red'} [props.color='primary']
- * @param {string} [props.className]
- * @param {string} [props.label='Loading...']
- */
 const LoadingSpinner = ({
   size = 'md',
   color = 'primary',
@@ -56,12 +37,12 @@ const LoadingSpinner = ({
         )}
         style={{
           borderTopColor:
-            color === 'primary' ? '#6366f1'
+            color === 'primary' ? '#10b981'
             : color === 'white' ? '#ffffff'
             : color === 'gray'  ? '#9ca3af'
             : color === 'green' ? '#22c55e'
             : color === 'red'   ? '#ef4444'
-            : '#6366f1',
+            : '#10b981',
         }}
       />
       <span className="sr-only">{label}</span>

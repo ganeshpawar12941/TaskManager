@@ -1,11 +1,3 @@
-/**
- * src/pages/TasksPage.jsx
- *
- * Full Task list page.
- * Displays the filter/search/sort bar, the grid of Task Cards,
- * and handles pagination.
- */
-
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTaskContext } from '../context/TaskContext';
@@ -36,10 +28,8 @@ const TasksPage = () => {
     setFilters,
   } = useTaskContext();
 
-  // Fetch tasks on mount and when filters change
   useEffect(() => {
     fetchTasks({ ...filters, page: 1 });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters, fetchTasks]);
 
   const handleFiltersChange = (newFilters) => {
@@ -55,12 +45,10 @@ const TasksPage = () => {
     fetchTasks({ ...filters, page: newPage });
   };
 
-  // Determine if filters are active
   const isFiltered = !!(filters.search || filters.status || filters.priority);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
-      {/* ── Page Header ────────────────────────────────────────────────── */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white">
@@ -82,7 +70,6 @@ const TasksPage = () => {
         </Link>
       </div>
 
-      {/* ── Filters Bar ────────────────────────────────────────────────── */}
       <div className="card p-4">
         <TaskFilters
           filters={filters}
@@ -91,7 +78,6 @@ const TasksPage = () => {
         />
       </div>
 
-      {/* ── Tasks List / Grid ──────────────────────────────────────────── */}
       <TaskList
         tasks={tasks}
         loading={loading}
@@ -101,13 +87,11 @@ const TasksPage = () => {
         onClearFilters={handleClearFilters}
       />
 
-      {/* ── Pagination ─────────────────────────────────────────────────── */}
       {!loading && !error && pagination.totalPages > 1 && (
         <nav
           className="flex items-center justify-between border-t border-gray-200 dark:border-slate-800 pt-6 mt-4"
           aria-label="Pagination Navigation"
         >
-          {/* Previous Page Button */}
           <div className="flex-1 flex justify-between sm:justify-end gap-3">
             <button
               onClick={() => handlePageChange(pagination.page - 1)}
@@ -119,13 +103,11 @@ const TasksPage = () => {
               <span className="hidden sm:inline">Previous</span>
             </button>
 
-            {/* Pagination details */}
             <div className="flex items-center text-sm text-gray-700 dark:text-gray-300">
               Page <span className="font-semibold mx-1 text-gray-900 dark:text-white">{pagination.page}</span> of{' '}
               <span className="font-semibold mx-1 text-gray-900 dark:text-white">{pagination.totalPages}</span>
             </div>
 
-            {/* Next Page Button */}
             <button
               onClick={() => handlePageChange(pagination.page + 1)}
               disabled={pagination.page >= pagination.totalPages}

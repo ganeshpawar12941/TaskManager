@@ -1,19 +1,10 @@
-/**
- * src/validators/taskValidator.js
- *
- * Input validation rules for Task API endpoints using express-validator.
- * Each exported array contains validation chains to be used as route middleware.
- *
- * Usage:
- *   router.post('/', createTaskValidator, validateRequest, controller.create);
- */
+
 
 'use strict';
 
 const { body, param, query } = require('express-validator');
 const { TASK_STATUSES, TASK_PRIORITIES } = require('../models/Task');
 
-// ─── Shared Field Validators ───────────────────────────────────────────────────
 
 const titleValidator = body('title')
   .trim()
@@ -62,7 +53,6 @@ const mongoIdValidator = (location = 'params', fieldName = 'id') => {
     .withMessage(`${fieldName} must be a valid MongoDB ObjectId`);
 };
 
-// ─── Validator Arrays (for use as route middleware) ────────────────────────────
 
 /**
  * Validation rules for POST /api/v1/tasks (Create Task)

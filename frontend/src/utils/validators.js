@@ -1,21 +1,5 @@
-/**
- * src/utils/validators.js
- *
- * Frontend form validation utility functions.
- * Used inside React Hook Form or custom validation logic.
- *
- * Returns error message strings (or undefined if valid).
- */
-
 import { FIELD_LIMITS } from './constants';
 
-// ─── Field Validators ──────────────────────────────────────────────────────────
-
-/**
- * Validates task title.
- * @param {string} value
- * @returns {string|undefined}
- */
 export const validateTitle = (value) => {
   if (!value || !value.trim()) return 'Title is required';
   if (value.trim().length < FIELD_LIMITS.TITLE_MIN)
@@ -25,57 +9,32 @@ export const validateTitle = (value) => {
   return undefined;
 };
 
-/**
- * Validates task description.
- * @param {string|undefined} value
- * @returns {string|undefined}
- */
 export const validateDescription = (value) => {
-  if (!value) return undefined; // Optional field
+  if (!value) return undefined;
   if (value.length > FIELD_LIMITS.DESCRIPTION_MAX)
     return `Description cannot exceed ${FIELD_LIMITS.DESCRIPTION_MAX} characters`;
   return undefined;
 };
 
-/**
- * Validates task status.
- * @param {string} value
- * @returns {string|undefined}
- */
 export const validateStatus = (value) => {
   const valid = ['todo', 'in-progress', 'completed'];
   if (value && !valid.includes(value)) return 'Invalid status value';
   return undefined;
 };
 
-/**
- * Validates task priority.
- * @param {string} value
- * @returns {string|undefined}
- */
 export const validatePriority = (value) => {
   const valid = ['low', 'medium', 'high'];
   if (value && !valid.includes(value)) return 'Invalid priority value';
   return undefined;
 };
 
-/**
- * Validates due date (must be a future date, optional field).
- * @param {string|Date|null|undefined} value
- * @returns {string|undefined}
- */
 export const validateDueDate = (value) => {
-  if (!value) return undefined; // Optional
+  if (!value) return undefined;
   const date = new Date(value);
   if (isNaN(date.getTime())) return 'Invalid date format';
   return undefined;
 };
 
-/**
- * Validates tags array.
- * @param {string[]} tags
- * @returns {string|undefined}
- */
 export const validateTags = (tags) => {
   if (!tags || !Array.isArray(tags)) return undefined;
   if (tags.length > FIELD_LIMITS.TAGS_MAX)
@@ -85,15 +44,6 @@ export const validateTags = (tags) => {
   return undefined;
 };
 
-// ─── Full Form Validator ───────────────────────────────────────────────────────
-
-/**
- * Validates the entire task form object.
- * Returns an errors object: { field: 'error message' }.
- *
- * @param {object} formData
- * @returns {object} errors - empty if valid
- */
 export const validateTaskForm = (formData) => {
   const errors = {};
 
@@ -114,10 +64,4 @@ export const validateTaskForm = (formData) => {
   return errors;
 };
 
-/**
- * Returns true if the errors object has no keys (form is valid).
- *
- * @param {object} errors
- * @returns {boolean}
- */
 export const isFormValid = (errors) => Object.keys(errors).length === 0;

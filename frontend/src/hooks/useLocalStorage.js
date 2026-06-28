@@ -1,22 +1,5 @@
-/**
- * src/hooks/useLocalStorage.js
- *
- * Custom hook that syncs state with localStorage.
- * Falls back to the initial value if no stored value exists.
- *
- * Usage:
- *   const [theme, setTheme] = useLocalStorage('theme', 'light');
- */
+import { useState } from 'react';
 
-import { useState, useEffect } from 'react';
-
-/**
- * useLocalStorage
- *
- * @param {string} key - localStorage key
- * @param {*} initialValue - Default value if key doesn't exist
- * @returns {[*, Function]} [storedValue, setValue]
- */
 const useLocalStorage = (key, initialValue) => {
   const [storedValue, setStoredValue] = useState(() => {
     try {
@@ -30,7 +13,6 @@ const useLocalStorage = (key, initialValue) => {
 
   const setValue = (value) => {
     try {
-      // Support functional updates
       const valueToStore =
         value instanceof Function ? value(storedValue) : value;
       setStoredValue(valueToStore);

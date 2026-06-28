@@ -1,12 +1,4 @@
-/**
- * src/services/taskService.js
- *
- * Task service layer that encapsulates all database operations.
- * Controllers call service methods — services interact with Mongoose models.
- * This separation allows easier testing and reuse.
- *
- * All methods are placeholder stubs — business logic to be implemented.
- */
+
 
 'use strict';
 

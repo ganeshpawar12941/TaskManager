@@ -1,19 +1,11 @@
-/**
- * src/models/Task.js
- *
- * Mongoose schema and model for the Task resource.
- * Defines fields, types, defaults, validations, indexes, and virtuals.
- */
 
 'use strict';
 
 const mongoose = require('mongoose');
 
-// ─── Constants ─────────────────────────────────────────────────────────────────
 const TASK_STATUSES = ['todo', 'in-progress', 'completed'];
 const TASK_PRIORITIES = ['low', 'medium', 'high'];
 
-// ─── Task Schema ───────────────────────────────────────────────────────────────
 const taskSchema = new mongoose.Schema(
   {
     title: {
@@ -93,14 +85,12 @@ const taskSchema = new mongoose.Schema(
   }
 );
 
-// ─── Indexes for Performance ───────────────────────────────────────────────────
 taskSchema.index({ status: 1 });
 taskSchema.index({ priority: 1 });
 taskSchema.index({ dueDate: 1 });
 taskSchema.index({ createdAt: -1 });
 taskSchema.index({ title: 'text', description: 'text' }); // Full-text search
 
-// ─── Virtuals ──────────────────────────────────────────────────────────────────
 
 /**
  * Virtual: isOverdue
@@ -123,7 +113,6 @@ taskSchema.virtual('daysUntilDue').get(function () {
   return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 });
 
-// ─── Pre-save Middleware ───────────────────────────────────────────────────────
 
 /**
  * Pre-save hook: set completedAt when status changes to 'completed'.
@@ -143,7 +132,6 @@ taskSchema.pre('save', function (next) {
   next();
 });
 
-// ─── Static Methods ────────────────────────────────────────────────────────────
 
 /**
  * Static: getStatusCounts
@@ -169,7 +157,6 @@ taskSchema.statics.getStatusCounts = async function () {
   return result;
 };
 
-// ─── Instance Methods ──────────────────────────────────────────────────────────
 
 /**
  * Instance: markComplete
@@ -181,7 +168,6 @@ taskSchema.methods.markComplete = async function () {
   return this.save();
 };
 
-// ─── Export ────────────────────────────────────────────────────────────────────
 const Task = mongoose.model('Task', taskSchema);
 
 module.exports = Task;

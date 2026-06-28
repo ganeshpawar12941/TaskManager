@@ -1,16 +1,8 @@
-/**
- * src/components/Navbar/Navbar.jsx
- *
- * Top navigation bar with logo, links, search bar, and dark mode toggle.
- * Responsive: collapses to hamburger menu on mobile.
- */
-
 import React, { useState, useEffect } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { ROUTES } from '../../utils/constants';
 import useLocalStorage from '../../hooks/useLocalStorage';
 
-// ─── Icons (inline SVG for zero dependencies) ─────────────────────────────────
 const CheckSquareIcon = () => (
   <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
     <rect x="3" y="3" width="18" height="18" rx="3" />
@@ -49,13 +41,11 @@ const XIcon = () => (
   </svg>
 );
 
-// ─── Nav Links Config ──────────────────────────────────────────────────────────
 const NAV_LINKS = [
   { to: ROUTES.HOME,  label: 'Dashboard' },
   { to: ROUTES.TASKS, label: 'All Tasks' },
 ];
 
-// ─── Navbar Component ──────────────────────────────────────────────────────────
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled]     = useState(false);
@@ -67,7 +57,7 @@ const Navbar = () => {
     setMobileOpen(false);
   }, [location.pathname]);
 
-  // Apply / remove dark class on <html>
+  // Apply or remove dark class on HTML element
   useEffect(() => {
     if (theme === 'dark') {
       document.documentElement.classList.add('dark');
@@ -102,8 +92,6 @@ const Navbar = () => {
     >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-
-          {/* ── Logo ─────────────────────────────────────────────────────── */}
           <Link
             to={ROUTES.HOME}
             className="flex items-center gap-2.5 text-primary-600 dark:text-primary-400 hover:opacity-80 transition-opacity"
@@ -117,7 +105,6 @@ const Navbar = () => {
             </span>
           </Link>
 
-          {/* ── Desktop Nav Links ─────────────────────────────────────────── */}
           <div className="hidden md:flex items-center gap-1">
             {NAV_LINKS.map((link) => (
               <NavLink key={link.to} to={link.to} className={navLinkClass} end={link.to === ROUTES.HOME}>
@@ -126,9 +113,7 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* ── Right Actions ─────────────────────────────────────────────── */}
           <div className="flex items-center gap-2">
-            {/* Dark Mode Toggle */}
             <button
               id="theme-toggle-btn"
               onClick={toggleTheme}
@@ -138,7 +123,6 @@ const Navbar = () => {
               {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
             </button>
 
-            {/* Create Task Button (desktop) */}
             <Link
               to={ROUTES.NEW_TASK}
               id="create-task-nav-btn"
@@ -148,7 +132,6 @@ const Navbar = () => {
               New Task
             </Link>
 
-            {/* Mobile Hamburger */}
             <button
               id="mobile-menu-btn"
               onClick={() => setMobileOpen((o) => !o)}
@@ -161,7 +144,6 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* ── Mobile Menu ────────────────────────────────────────────────── */}
         {mobileOpen && (
           <div className="md:hidden border-t border-gray-100 dark:border-slate-700 py-3 animate-slide-down">
             <div className="flex flex-col gap-1">

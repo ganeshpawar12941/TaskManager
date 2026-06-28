@@ -1,10 +1,3 @@
-/**
- * src/pages/EditTaskPage.jsx
- *
- * Page for editing an existing task.
- * Fetches task details and passes them as initialData to TaskForm.
- */
-
 import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTaskContext } from '../context/TaskContext';
@@ -24,7 +17,6 @@ const EditTaskPage = () => {
   const navigate = useNavigate();
   const { task, loading, error, fetchTaskById, updateTask } = useTaskContext();
 
-  // Fetch task details on mount
   useEffect(() => {
     fetchTaskById(id);
   }, [id, fetchTaskById]);
@@ -34,12 +26,11 @@ const EditTaskPage = () => {
       await updateTask(id, taskData);
       navigate(ROUTES.TASK_DETAIL(id));
     } catch (err) {
-      // Error handled by context/toast
     }
   };
 
   const handleCancel = () => {
-    navigate(-1); // Go back
+    navigate(-1);
   };
 
   if (loading && (!task || task.id !== id)) {
@@ -59,7 +50,6 @@ const EditTaskPage = () => {
 
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 space-y-6">
-      {/* ── Breadcrumbs / Back button ──────────────────────────────────── */}
       <div>
         <button
           onClick={handleCancel}
@@ -71,7 +61,6 @@ const EditTaskPage = () => {
         </button>
       </div>
 
-      {/* ── Header ─────────────────────────────────────────────────────── */}
       <div>
         <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white">
           Edit Task
@@ -81,7 +70,6 @@ const EditTaskPage = () => {
         </p>
       </div>
 
-      {/* ── Form Card ──────────────────────────────────────────────────── */}
       <div className="card p-6 sm:p-8">
         {task && task.id === id && (
           <TaskForm

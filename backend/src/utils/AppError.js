@@ -1,12 +1,3 @@
-/**
- * src/utils/AppError.js
- *
- * Custom application error class that extends the native Error.
- * Adds HTTP status code and operational flag for structured error handling.
- *
- * Usage:
- *   throw new AppError('Task not found', 404);
- */
 
 'use strict';
 

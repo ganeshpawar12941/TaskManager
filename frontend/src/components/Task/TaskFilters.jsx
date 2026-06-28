@@ -1,19 +1,7 @@
-/**
- * src/components/Task/TaskFilters.jsx
- *
- * Filter, search, and sort bar for the task list.
- * Includes a search input, status filter, priority filter, and sort selector.
- * Emits changes to the parent via onFiltersChange.
- *
- * @placeholder - Debounced search and URL query sync to be implemented
- */
-
 import React, { useState, useEffect } from 'react';
-import clsx from 'clsx';
 import { TASK_STATUSES, TASK_PRIORITIES, SORT_OPTIONS } from '../../utils/constants';
 import useDebounce from '../../hooks/useDebounce';
 
-// ─── Icons ─────────────────────────────────────────────────────────────────────
 const SearchIcon = () => (
   <svg className="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
     <circle cx="11" cy="11" r="7" />
@@ -40,20 +28,9 @@ const SortIcon = () => (
   </svg>
 );
 
-// ─── TaskFilters ───────────────────────────────────────────────────────────────
-
-/**
- * TaskFilters Component
- *
- * @param {object} props
- * @param {object} props.filters - Current filter state { search, status, priority, sort }
- * @param {Function} props.onFiltersChange - Called with updated filters object
- * @param {number} [props.totalCount] - Total number of tasks (for display)
- */
 const TaskFilters = ({ filters, onFiltersChange, totalCount }) => {
   const [searchInput, setSearchInput] = useState(filters.search || '');
 
-  // Debounce search input before applying to filters
   const debouncedSearch = useDebounce(searchInput, 400);
 
   useEffect(() => {
@@ -80,7 +57,6 @@ const TaskFilters = ({ filters, onFiltersChange, totalCount }) => {
 
   return (
     <div className="space-y-3">
-      {/* ── Search Bar ────────────────────────────────────────────────── */}
       <div className="relative">
         <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
           <SearchIcon />
@@ -105,15 +81,12 @@ const TaskFilters = ({ filters, onFiltersChange, totalCount }) => {
         )}
       </div>
 
-      {/* ── Filter Row ────────────────────────────────────────────────── */}
       <div className="flex flex-wrap gap-3 items-center">
-        {/* Filter icon label */}
         <div className="flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400">
           <FilterIcon />
           <span className="hidden sm:inline">Filters:</span>
         </div>
 
-        {/* Status Filter */}
         <select
           id="task-status-filter"
           value={filters.status}
@@ -127,7 +100,6 @@ const TaskFilters = ({ filters, onFiltersChange, totalCount }) => {
           ))}
         </select>
 
-        {/* Priority Filter */}
         <select
           id="task-priority-filter"
           value={filters.priority}
@@ -141,7 +113,6 @@ const TaskFilters = ({ filters, onFiltersChange, totalCount }) => {
           ))}
         </select>
 
-        {/* Sort Selector */}
         <div className="flex items-center gap-1.5 flex-1 sm:flex-none min-w-[160px]">
           <SortIcon className="text-gray-500 dark:text-gray-400 flex-shrink-0" />
           <select
@@ -157,7 +128,6 @@ const TaskFilters = ({ filters, onFiltersChange, totalCount }) => {
           </select>
         </div>
 
-        {/* Clear Filters */}
         {hasActiveFilters && (
           <button
             id="clear-filters-btn"
@@ -169,7 +139,6 @@ const TaskFilters = ({ filters, onFiltersChange, totalCount }) => {
           </button>
         )}
 
-        {/* Task Count */}
         {typeof totalCount === 'number' && (
           <span className="ml-auto text-sm text-gray-500 dark:text-gray-400">
             <span className="font-semibold text-gray-900 dark:text-white">{totalCount}</span> task{totalCount !== 1 ? 's' : ''}

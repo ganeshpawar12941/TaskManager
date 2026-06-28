@@ -1,20 +1,9 @@
-/**
- * src/components/Task/TaskForm.jsx
- *
- * Reusable task form for both Create and Edit pages.
- * Handles all form fields: title, description, status, priority, dueDate, tags.
- * Performs frontend validation before submission.
- *
- * @placeholder - Form submission logic to be wired to context actions
- */
-
 import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import LoadingSpinner from '../common/LoadingSpinner';
 import { TASK_STATUSES, TASK_PRIORITIES, FIELD_LIMITS } from '../../utils/constants';
 import { validateTaskForm, isFormValid } from '../../utils/validators';
 
-// ─── Tag Input ─────────────────────────────────────────────────────────────────
 const TagInput = ({ tags, onChange }) => {
   const [inputValue, setInputValue] = useState('');
 
@@ -69,8 +58,6 @@ const TagInput = ({ tags, onChange }) => {
   );
 };
 
-// ─── TaskForm ──────────────────────────────────────────────────────────────────
-
 const DEFAULT_FORM_DATA = {
   title:       '',
   description: '',
@@ -80,16 +67,6 @@ const DEFAULT_FORM_DATA = {
   tags:        [],
 };
 
-/**
- * TaskForm Component
- *
- * @param {object} props
- * @param {object} [props.initialData] - Pre-populated data for edit mode
- * @param {Function} props.onSubmit - Called with validated form data
- * @param {boolean} [props.isLoading=false]
- * @param {'create'|'edit'} [props.mode='create']
- * @param {Function} [props.onCancel]
- */
 const TaskForm = ({
   initialData,
   onSubmit,
@@ -104,13 +81,11 @@ const TaskForm = ({
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
 
-  // Populate form when initialData changes (edit mode)
   useEffect(() => {
     if (initialData) {
       setFormData({
         ...DEFAULT_FORM_DATA,
         ...initialData,
-        // Format date for datetime-local input
         dueDate: initialData.dueDate
           ? new Date(initialData.dueDate).toISOString().slice(0, 16)
           : '',
@@ -118,11 +93,8 @@ const TaskForm = ({
     }
   }, [initialData]);
 
-  // ─── Handlers ─────────────────────────────────────────────────────────────
-
   const handleChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
-    // Clear error on change
     if (errors[field]) {
       setErrors((prev) => ({ ...prev, [field]: undefined }));
     }
@@ -130,7 +102,6 @@ const TaskForm = ({
 
   const handleBlur = (field) => {
     setTouched((prev) => ({ ...prev, [field]: true }));
-    // Validate on blur
     const fieldErrors = validateTaskForm(formData);
     if (fieldErrors[field]) {
       setErrors((prev) => ({ ...prev, [field]: fieldErrors[field] }));
@@ -139,7 +110,6 @@ const TaskForm = ({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Mark all fields as touched
     setTouched({ title: true, description: true, status: true, priority: true, dueDate: true, tags: true });
 
     const validationErrors = validateTaskForm(formData);
@@ -147,7 +117,6 @@ const TaskForm = ({
 
     if (!isFormValid(validationErrors)) return;
 
-    // Build payload (remove empty optional fields)
     const payload = {
       ...formData,
       dueDate: formData.dueDate || null,
@@ -157,7 +126,6 @@ const TaskForm = ({
     await onSubmit(payload);
   };
 
-  // ─── Render ────────────────────────────────────────────────────────────────
   return (
     <form
       onSubmit={handleSubmit}
@@ -165,7 +133,6 @@ const TaskForm = ({
       className="space-y-6"
       aria-label={mode === 'create' ? 'Create Task Form' : 'Edit Task Form'}
     >
-      {/* ── Title ─────────────────────────────────────────────────────── */}
       <div>
         <label htmlFor="task-title" className="label">
           Title <span className="text-red-500">*</span>
@@ -183,7 +150,6 @@ const TaskForm = ({
           aria-invalid={!!errors.title}
           disabled={isLoading}
         />
-        {/* Character count */}
         <div className="flex justify-between mt-1">
           {touched.title && errors.title ? (
             <span id="title-error" className="error-msg">{errors.title}</span>
@@ -196,7 +162,6 @@ const TaskForm = ({
         </div>
       </div>
 
-      {/* ── Description ───────────────────────────────────────────────── */}
       <div>
         <label htmlFor="task-description" className="label">
           Description
@@ -222,9 +187,7 @@ const TaskForm = ({
         </div>
       </div>
 
-      {/* ── Status & Priority Row ──────────────────────────────────────── */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {/* Status */}
         <div>
           <label htmlFor="task-status" className="label">Status</label>
           <select
@@ -240,7 +203,6 @@ const TaskForm = ({
           </select>
         </div>
 
-        {/* Priority */}
         <div>
           <label htmlFor="task-priority" className="label">Priority</label>
           <select
@@ -257,7 +219,6 @@ const TaskForm = ({
         </div>
       </div>
 
-      {/* ── Due Date ──────────────────────────────────────────────────── */}
       <div>
         <label htmlFor="task-due-date" className="label">Due Date</label>
         <input
@@ -274,7 +235,6 @@ const TaskForm = ({
         )}
       </div>
 
-      {/* ── Tags ──────────────────────────────────────────────────────── */}
       <div>
         <label className="label">
           Tags
@@ -294,7 +254,6 @@ const TaskForm = ({
         </p>
       </div>
 
-      {/* ── Form Actions ───────────────────────────────────────────────── */}
       <div className="flex gap-3 pt-2">
         {onCancel && (
           <button

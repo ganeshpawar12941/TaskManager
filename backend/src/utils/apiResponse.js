@@ -1,9 +1,4 @@
-/**
- * src/utils/apiResponse.js
- *
- * Utility helpers for sending consistent JSON API responses.
- * All controller responses should use these helpers.
- */
+
 
 'use strict';
 

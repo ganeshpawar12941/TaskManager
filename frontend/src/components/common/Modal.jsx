@@ -1,20 +1,3 @@
-/**
- * src/components/common/Modal.jsx
- *
- * Accessible, animated modal dialog component.
- * Traps focus, closes on Escape key, and handles backdrop click.
- *
- * Usage:
- *   <Modal
- *     isOpen={isOpen}
- *     onClose={() => setIsOpen(false)}
- *     title="Confirm Delete"
- *     size="sm"
- *   >
- *     <p>Are you sure?</p>
- *   </Modal>
- */
-
 import React, { useEffect, useRef } from 'react';
 import clsx from 'clsx';
 
@@ -32,18 +15,6 @@ const XIcon = () => (
   </svg>
 );
 
-/**
- * Modal Component
- *
- * @param {object} props
- * @param {boolean} props.isOpen
- * @param {Function} props.onClose
- * @param {string} [props.title]
- * @param {React.ReactNode} props.children
- * @param {'sm'|'md'|'lg'|'xl'|'full'} [props.size='md']
- * @param {boolean} [props.closable=true]
- * @param {string} [props.className]
- */
 const Modal = ({
   isOpen,
   onClose,
@@ -56,7 +27,6 @@ const Modal = ({
   const overlayRef = useRef(null);
   const dialogRef  = useRef(null);
 
-  // Close on Escape key
   useEffect(() => {
     if (!isOpen || !closable) return;
     const handleEsc = (e) => {
@@ -66,7 +36,6 @@ const Modal = ({
     return () => document.removeEventListener('keydown', handleEsc);
   }, [isOpen, onClose, closable]);
 
-  // Prevent body scroll while modal is open
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
@@ -76,7 +45,6 @@ const Modal = ({
     return () => { document.body.style.overflow = ''; };
   }, [isOpen]);
 
-  // Close on backdrop click
   const handleBackdropClick = (e) => {
     if (closable && e.target === overlayRef.current) {
       onClose();
@@ -104,7 +72,6 @@ const Modal = ({
           className
         )}
       >
-        {/* Header */}
         {(title || closable) && (
           <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 dark:border-slate-700">
             {title && (
@@ -128,7 +95,6 @@ const Modal = ({
           </div>
         )}
 
-        {/* Body */}
         <div className="px-6 py-4">{children}</div>
       </div>
     </div>

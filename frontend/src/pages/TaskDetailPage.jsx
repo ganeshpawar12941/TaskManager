@@ -1,10 +1,3 @@
-/**
- * src/pages/TaskDetailPage.jsx
- *
- * Page for viewing details of a single task.
- * Includes options to edit, delete, or mark as completed.
- */
-
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useTaskContext } from '../context/TaskContext';
@@ -15,7 +8,6 @@ import ConfirmDialog from '../components/common/ConfirmDialog';
 import { formatDueDate, formatDateTime, isOverdue } from '../utils/formatters';
 import { ROUTES } from '../utils/constants';
 
-// ─── Icons ─────────────────────────────────────────────────────────────────────
 const ChevronLeftIcon = () => (
   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
     <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
@@ -54,7 +46,6 @@ const ClockIcon = () => (
   </svg>
 );
 
-// ─── TaskDetailPage ────────────────────────────────────────────────────────────
 const TaskDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -64,12 +55,10 @@ const TaskDetailPage = () => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [isCompleting, setIsCompleting] = useState(false);
 
-  // Fetch task on mount and ID change
   useEffect(() => {
     fetchTaskById(id);
   }, [id, fetchTaskById]);
 
-  // Handlers
   const handleDelete = async () => {
     setIsDeleting(true);
     try {
@@ -115,7 +104,6 @@ const TaskDetailPage = () => {
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8 space-y-6">
-      {/* ── Header Actions ─────────────────────────────────────────────── */}
       <div className="flex items-center justify-between">
         <Link
           to={ROUTES.TASKS}
@@ -156,9 +144,7 @@ const TaskDetailPage = () => {
         </div>
       </div>
 
-      {/* ── Main Details Grid ───────────────────────────────────────────── */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Main Content Pane */}
         <div className="lg:col-span-2 card p-6 sm:p-8 space-y-6 flex flex-col justify-between">
           <div className="space-y-4">
             <div className="flex flex-wrap gap-2">
@@ -188,13 +174,11 @@ const TaskDetailPage = () => {
           </div>
         </div>
 
-        {/* Sidebar Info Pane */}
         <div className="card p-6 space-y-6">
           <h2 className="text-lg font-bold text-gray-900 dark:text-white border-b border-gray-100 dark:border-slate-800 pb-3">
             Task Metadata
           </h2>
 
-          {/* Due Date info */}
           <div className="flex items-start gap-3">
             <CalendarIcon className="mt-0.5" />
             <div>
@@ -207,7 +191,6 @@ const TaskDetailPage = () => {
             </div>
           </div>
 
-          {/* Timestamps */}
           <div className="flex items-start gap-3">
             <ClockIcon className="mt-0.5" />
             <div className="space-y-4">
@@ -240,7 +223,6 @@ const TaskDetailPage = () => {
             </div>
           </div>
 
-          {/* Tags section */}
           <div>
             <h4 className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-2">
               Tags
@@ -258,7 +240,6 @@ const TaskDetailPage = () => {
         </div>
       </div>
 
-      {/* Delete Confirmation */}
       <ConfirmDialog
         isOpen={showDeleteConfirm}
         onClose={() => setShowDeleteConfirm(false)}

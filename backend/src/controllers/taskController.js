@@ -1,21 +1,4 @@
-/**
- * src/controllers/taskController.js
- *
- * Express route controller for the Task resource.
- * Delegates all database operations to TaskService.
- * Uses catchAsync for consistent async error handling.
- *
- * RESTful Endpoints:
- *   GET    /api/v1/tasks          → getAllTasks
- *   POST   /api/v1/tasks          → createTask
- *   GET    /api/v1/tasks/stats    → getTaskStats
- *   GET    /api/v1/tasks/:id      → getTaskById
- *   PUT    /api/v1/tasks/:id      → updateTask
- *   PATCH  /api/v1/tasks/:id      → patchTask
- *   DELETE /api/v1/tasks/:id      → deleteTask
- *   PATCH  /api/v1/tasks/:id/archive → archiveTask
- *   DELETE /api/v1/tasks/bulk     → bulkDeleteTasks
- */
+
 
 'use strict';
 
@@ -105,7 +88,7 @@ const archiveTask = catchAsync(async (req, res, next) => {
  */
 const bulkDeleteTasks = catchAsync(async (req, res, next) => {
   const { ids } = req.body;
-  
+
   if (!ids || !Array.isArray(ids) || ids.length === 0) {
     throw new AppError('Please provide an array of task IDs to delete', 400);
   }

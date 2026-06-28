@@ -1,12 +1,3 @@
-/**
- * src/components/common/ErrorMessage.jsx
- *
- * Displays an inline error banner with an optional retry action.
- *
- * Usage:
- *   <ErrorMessage message="Failed to load tasks" onRetry={refetch} />
- */
-
 import React from 'react';
 
 const AlertCircleIcon = () => (
@@ -16,15 +7,6 @@ const AlertCircleIcon = () => (
   </svg>
 );
 
-/**
- * ErrorMessage Component
- *
- * @param {object} props
- * @param {string} [props.message]
- * @param {Function} [props.onRetry]
- * @param {string} [props.retryLabel='Try Again']
- * @param {string} [props.className]
- */
 const ErrorMessage = ({
   message = 'Something went wrong. Please try again.',
   onRetry,

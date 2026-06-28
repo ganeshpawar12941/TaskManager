@@ -1,10 +1,3 @@
-/**
- * src/pages/CreateTaskPage.jsx
- *
- * Page for creating a new task.
- * Integrates the TaskForm component.
- */
-
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTaskContext } from '../context/TaskContext';
@@ -26,17 +19,15 @@ const CreateTaskPage = () => {
       await createTask(taskData);
       navigate(ROUTES.TASKS);
     } catch (err) {
-      // Errors are handled inside TaskContext/toast, nothing else needed here
     }
   };
 
   const handleCancel = () => {
-    navigate(-1); // Back to previous page
+    navigate(-1);
   };
 
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 space-y-6">
-      {/* ── Breadcrumbs / Back button ──────────────────────────────────── */}
       <div>
         <button
           onClick={handleCancel}
@@ -48,7 +39,6 @@ const CreateTaskPage = () => {
         </button>
       </div>
 
-      {/* ── Header ─────────────────────────────────────────────────────── */}
       <div>
         <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white">
           Create New Task
@@ -58,7 +48,6 @@ const CreateTaskPage = () => {
         </p>
       </div>
 
-      {/* ── Form Card ──────────────────────────────────────────────────── */}
       <div className="card p-6 sm:p-8">
         <TaskForm
           onSubmit={handleSubmit}

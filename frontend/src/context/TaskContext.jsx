@@ -1,22 +1,9 @@
-/**
- * src/context/TaskContext.jsx
- *
- * Global React context for task state management.
- * Provides tasks list, loading state, error state, and CRUD action dispatchers
- * to any component in the tree without prop drilling.
- *
- * Usage:
- *   const { tasks, loading, createTask, deleteTask } = useTaskContext();
- */
-
 import React, { createContext, useContext, useReducer, useCallback } from 'react';
 import toast from 'react-hot-toast';
 import TaskAPI from '../api/taskApi';
 
-// ─── Context ───────────────────────────────────────────────────────────────────
 const TaskContext = createContext(null);
 
-// ─── Action Types ──────────────────────────────────────────────────────────────
 export const TASK_ACTIONS = {
   SET_LOADING:    'SET_LOADING',
   SET_ERROR:      'SET_ERROR',
@@ -32,10 +19,9 @@ export const TASK_ACTIONS = {
   RESET:          'RESET',
 };
 
-// ─── Initial State ─────────────────────────────────────────────────────────────
 const initialState = {
   tasks:       [],
-  task:        null,      // Single task being viewed/edited
+  task:        null,
   stats:       null,
   loading:     false,
   error:       null,
@@ -55,7 +41,6 @@ const initialState = {
   },
 };
 
-// ─── Reducer ───────────────────────────────────────────────────────────────────
 const taskReducer = (state, action) => {
   switch (action.type) {
     case TASK_ACTIONS.SET_LOADING:
@@ -114,20 +99,9 @@ const taskReducer = (state, action) => {
   }
 };
 
-// ─── Provider ──────────────────────────────────────────────────────────────────
-
-/**
- * TaskProvider wraps the application and provides task state + actions.
- */
 export const TaskProvider = ({ children }) => {
   const [state, dispatch] = useReducer(taskReducer, initialState);
 
-  // ─── Action Creators ─────────────────────────────────────────────────────
-
-  /**
-   * Fetch all tasks (with optional filter params).
-   * @placeholder - Full implementation pending
-   */
   const fetchTasks = useCallback(async (params = {}) => {
     dispatch({ type: TASK_ACTIONS.SET_LOADING, payload: true });
     try {
@@ -142,10 +116,6 @@ export const TaskProvider = ({ children }) => {
     }
   }, []);
 
-  /**
-   * Fetch a single task by ID.
-   * @placeholder - Full implementation pending
-   */
   const fetchTaskById = useCallback(async (id) => {
     dispatch({ type: TASK_ACTIONS.SET_LOADING, payload: true });
     try {
@@ -159,16 +129,12 @@ export const TaskProvider = ({ children }) => {
     }
   }, []);
 
-  /**
-   * Create a new task.
-   * @placeholder - Full implementation pending
-   */
   const createTask = useCallback(async (taskData) => {
     dispatch({ type: TASK_ACTIONS.SET_LOADING, payload: true });
     try {
       const res = await TaskAPI.create(taskData);
       dispatch({ type: TASK_ACTIONS.ADD_TASK, payload: res.data });
-      toast.success('Task created successfully! 🎉');
+      toast.success('Task created successfully!');
       return res.data;
     } catch (err) {
       dispatch({ type: TASK_ACTIONS.SET_LOADING, payload: false });
@@ -178,10 +144,6 @@ export const TaskProvider = ({ children }) => {
     }
   }, []);
 
-  /**
-   * Update an existing task (full replace).
-   * @placeholder - Full implementation pending
-   */
   const updateTask = useCallback(async (id, taskData) => {
     dispatch({ type: TASK_ACTIONS.SET_LOADING, payload: true });
     try {
@@ -197,10 +159,6 @@ export const TaskProvider = ({ children }) => {
     }
   }, []);
 
-  /**
-   * Partially update a task.
-   * @placeholder - Full implementation pending
-   */
   const patchTask = useCallback(async (id, partialData) => {
     try {
       const res = await TaskAPI.patch(id, partialData);
@@ -213,10 +171,6 @@ export const TaskProvider = ({ children }) => {
     }
   }, []);
 
-  /**
-   * Delete a task by ID.
-   * @placeholder - Full implementation pending
-   */
   const deleteTask = useCallback(async (id) => {
     try {
       await TaskAPI.delete(id);
@@ -229,31 +183,21 @@ export const TaskProvider = ({ children }) => {
     }
   }, []);
 
-  /**
-   * Fetch task statistics.
-   * @placeholder - Full implementation pending
-   */
   const fetchStats = useCallback(async () => {
     try {
       const res = await TaskAPI.getStats();
       dispatch({ type: TASK_ACTIONS.SET_STATS, payload: res.data });
       return res.data;
     } catch (err) {
-      // Stats are non-critical; fail silently
       console.error('Failed to fetch stats:', err.message);
     }
   }, []);
 
-  /**
-   * Update filter state (triggers re-fetch in consuming components).
-   */
   const setFilters = useCallback((newFilters) => {
     dispatch({ type: TASK_ACTIONS.SET_FILTERS, payload: newFilters });
   }, []);
 
-  // ─── Context Value ───────────────────────────────────────────────────────
   const value = {
-    // State
     tasks:      state.tasks,
     task:       state.task,
     stats:      state.stats,
@@ -261,8 +205,6 @@ export const TaskProvider = ({ children }) => {
     error:      state.error,
     pagination: state.pagination,
     filters:    state.filters,
-
-    // Actions
     fetchTasks,
     fetchTaskById,
     createTask,
@@ -271,20 +213,12 @@ export const TaskProvider = ({ children }) => {
     deleteTask,
     fetchStats,
     setFilters,
-
-    // Direct dispatch for advanced use cases
     dispatch,
   };
 
   return <TaskContext.Provider value={value}>{children}</TaskContext.Provider>;
 };
 
-// ─── Custom Hook ───────────────────────────────────────────────────────────────
-
-/**
- * useTaskContext - Provides access to the Task context.
- * Must be used within a TaskProvider.
- */
 export const useTaskContext = () => {
   const context = useContext(TaskContext);
   if (!context) {

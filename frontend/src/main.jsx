@@ -1,10 +1,3 @@
-/**
- * src/main.jsx
- *
- * React application entry point.
- * Renders the root App component into the DOM root.
- */
-
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
@@ -18,7 +11,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
       <TaskProvider>
-        {/* Global toast notifications */}
         <Toaster
           position="top-right"
           reverseOrder={false}

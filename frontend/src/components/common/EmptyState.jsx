@@ -1,22 +1,7 @@
-/**
- * src/components/common/EmptyState.jsx
- *
- * Displays a friendly empty state illustration with a title, description,
- * and an optional action button. Used when task lists are empty.
- *
- * Usage:
- *   <EmptyState
- *     title="No tasks yet"
- *     description="Create your first task to get started."
- *     action={{ label: 'Create Task', onClick: () => navigate('/tasks/new') }}
- *   />
- */
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 
-// Illustration: Clipboard with checkmark
 const EmptyIllustration = ({ className }) => (
   <svg
     viewBox="0 0 200 200"
@@ -69,16 +54,6 @@ const FilterEmptyIllustration = ({ className }) => (
   </svg>
 );
 
-/**
- * EmptyState Component
- *
- * @param {object} props
- * @param {string} [props.title]
- * @param {string} [props.description]
- * @param {{ label: string, to?: string, onClick?: Function }} [props.action]
- * @param {'default'|'filtered'} [props.variant='default']
- * @param {string} [props.className]
- */
 const EmptyState = ({
   title = 'Nothing here yet',
   description = '',
@@ -95,14 +70,12 @@ const EmptyState = ({
       role="status"
       aria-label={title}
     >
-      {/* Illustration */}
       {variant === 'filtered' ? (
         <FilterEmptyIllustration className="w-36 h-36 mb-6" />
       ) : (
         <EmptyIllustration className="w-36 h-36 mb-6" />
       )}
 
-      {/* Text */}
       <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2">
         {title}
       </h3>
@@ -112,7 +85,6 @@ const EmptyState = ({
         </p>
       )}
 
-      {/* Action */}
       {action && (
         <>
           {action.to ? (

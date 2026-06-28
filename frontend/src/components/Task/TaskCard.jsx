@@ -1,23 +1,12 @@
-/**
- * src/components/Task/TaskCard.jsx
- *
- * Card component for displaying a single task in the task list grid.
- * Shows title, description, status badge, priority badge, due date,
- * tags, and edit/delete action buttons.
- *
- * @placeholder - Interaction handlers to be implemented with business logic
- */
-
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
 import Badge from '../common/Badge';
-import ConfirmDialog from '../common/ConfirmDialog';
+import ConfirmDialog from '../components/common/ConfirmDialog';
 import { formatDueDate, truncate, isOverdue } from '../../utils/formatters';
 import { ROUTES } from '../../utils/constants';
 import { useTaskContext } from '../../context/TaskContext';
 
-// ─── Icons ─────────────────────────────────────────────────────────────────────
 const EditIcon = () => (
   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
     <path strokeLinecap="round" strokeLinejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -43,14 +32,6 @@ const CheckIcon = () => (
   </svg>
 );
 
-// ─── TaskCard ──────────────────────────────────────────────────────────────────
-
-/**
- * TaskCard Component
- *
- * @param {object} props
- * @param {object} props.task - Task document from the API
- */
 const TaskCard = ({ task }) => {
   const navigate = useNavigate();
   const { deleteTask, patchTask } = useTaskContext();
@@ -60,8 +41,6 @@ const TaskCard = ({ task }) => {
   const [isCompleting, setIsCompleting] = useState(false);
 
   const overdue = isOverdue(task.dueDate) && task.status !== 'completed';
-
-  // ─── Handlers (placeholders — business logic to be implemented) ───────────
 
   const handleDelete = async () => {
     setIsDeleting(true);
@@ -74,7 +53,6 @@ const TaskCard = ({ task }) => {
   };
 
   const handleMarkComplete = async () => {
-    // TODO: Implement optimistic update
     setIsCompleting(true);
     try {
       await patchTask(task.id, { status: 'completed' });
@@ -92,7 +70,6 @@ const TaskCard = ({ task }) => {
         )}
         aria-label={`Task: ${task.title}`}
       >
-        {/* ── Header ─────────────────────────────────────────────────── */}
         <div className="flex items-start justify-between gap-3">
           <div className="flex-1 min-w-0">
             <Link
@@ -108,7 +85,6 @@ const TaskCard = ({ task }) => {
             </Link>
           </div>
 
-          {/* Quick Complete Button */}
           {task.status !== 'completed' && (
             <button
               onClick={handleMarkComplete}
@@ -123,20 +99,17 @@ const TaskCard = ({ task }) => {
           )}
         </div>
 
-        {/* ── Description ────────────────────────────────────────────── */}
         {task.description && (
           <p className="text-sm text-gray-500 dark:text-gray-400 line-clamp-2">
             {task.description}
           </p>
         )}
 
-        {/* ── Badges ─────────────────────────────────────────────────── */}
         <div className="flex flex-wrap gap-1.5">
           <Badge variant="status" value={task.status} />
           <Badge variant="priority" value={task.priority} showDot />
         </div>
 
-        {/* ── Tags ───────────────────────────────────────────────────── */}
         {task.tags && task.tags.length > 0 && (
           <div className="flex flex-wrap gap-1">
             {task.tags.slice(0, 3).map((tag) => (
@@ -150,9 +123,7 @@ const TaskCard = ({ task }) => {
           </div>
         )}
 
-        {/* ── Footer ─────────────────────────────────────────────────── */}
         <div className="flex items-center justify-between pt-2 border-t border-gray-100 dark:border-slate-700 mt-auto">
-          {/* Due Date */}
           <div
             className={clsx(
               'flex items-center gap-1.5 text-xs',
@@ -166,7 +137,6 @@ const TaskCard = ({ task }) => {
             {overdue && <span className="font-bold">!</span>}
           </div>
 
-          {/* Action Buttons */}
           <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
             <Link
               to={ROUTES.EDIT_TASK(task.id)}
@@ -190,7 +160,6 @@ const TaskCard = ({ task }) => {
         </div>
       </article>
 
-      {/* Delete Confirmation */}
       <ConfirmDialog
         isOpen={showDeleteConfirm}
         onClose={() => setShowDeleteConfirm(false)}

@@ -1,10 +1,3 @@
-/**
- * server.js - Main entry point for the Task Tracker API
- *
- * Initializes Express application, connects to MongoDB,
- * applies global middleware, mounts API routes, and starts the server.
- */
-
 'use strict';
 
 const express = require('express');
@@ -20,17 +13,13 @@ const connectDB = require('./src/config/db');
 const taskRoutes = require('./src/routes/taskRoutes');
 const { notFound, errorHandler } = require('./src/middleware/errorHandler');
 
-// ─── App Initialization ────────────────────────────────────────────────────────
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// ─── Connect to MongoDB ────────────────────────────────────────────────────────
 connectDB();
 
-// ─── Security Middleware ───────────────────────────────────────────────────────
 app.use(helmet());
 
-// ─── CORS Configuration ────────────────────────────────────────────────────────
 app.use(
   cors({
     origin: process.env.CLIENT_URL || 'http://localhost:5173',
@@ -40,7 +29,6 @@ app.use(
   })
 );
 
-// ─── Rate Limiting ─────────────────────────────────────────────────────────────
 const limiter = rateLimit({
   windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS) || 15 * 60 * 1000, // 15 minutes
   max: parseInt(process.env.RATE_LIMIT_MAX) || 100,
@@ -53,23 +41,20 @@ const limiter = rateLimit({
 });
 app.use('/api', limiter);
 
-// ─── General Middleware ────────────────────────────────────────────────────────
 app.use(compression());
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 
-// ─── Logging ───────────────────────────────────────────────────────────────────
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 } else {
   app.use(morgan('combined'));
 }
 
-// ─── Health Check Route ────────────────────────────────────────────────────────
 app.get('/', (req, res) => {
   res.status(200).json({
     success: true,
-    message: 'Task Tracker API is running 🚀',
+    message: 'Task Tracker API is running',
     version: '1.0.0',
     environment: process.env.NODE_ENV,
     timestamp: new Date().toISOString(),
@@ -80,42 +65,35 @@ app.get('/api/health', (req, res) => {
   res.status(200).json({
     success: true,
     message: 'API Health OK',
-    dbState:
-      mongoose.connection.readyState === 1 ? 'Connected' : 'Disconnected',
+    dbState: mongoose.connection.readyState === 1 ? 'Connected' : 'Disconnected',
     uptime: process.uptime(),
     timestamp: new Date().toISOString(),
   });
 });
 
-// ─── API Routes ────────────────────────────────────────────────────────────────
 app.use('/api/v1/tasks', taskRoutes);
 
-// ─── 404 & Error Handling Middleware ──────────────────────────────────────────
 app.use(notFound);
 app.use(errorHandler);
 
-// ─── Start Server ──────────────────────────────────────────────────────────────
 const server = app.listen(PORT, () => {
-  console.log(
-    `\n🚀 Server running in ${process.env.NODE_ENV} mode on port ${PORT}`
-  );
-  console.log(`📡 API Base URL: http://localhost:${PORT}/api/v1`);
-  console.log(`❤️  Health Check: http://localhost:${PORT}/api/health\n`);
+  console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
+  console.log(`API Base URL: http://localhost:${PORT}/api/v1`);
+  console.log(`Health Check: http://localhost:${PORT}/api/health`);
 });
 
-// ─── Graceful Shutdown ─────────────────────────────────────────────────────────
 process.on('unhandledRejection', (err) => {
-  console.error('💥 Unhandled Promise Rejection:', err.name, err.message);
+  console.error('Unhandled Promise Rejection:', err.name, err.message);
   server.close(() => {
     process.exit(1);
   });
 });
 
 process.on('SIGTERM', () => {
-  console.log('👋 SIGTERM signal received. Closing server gracefully...');
+  console.log('SIGTERM received. Closing server gracefully...');
   server.close(() => {
     mongoose.connection.close(false, () => {
-      console.log('🔌 MongoDB connection closed.');
+      console.log('MongoDB connection closed.');
       process.exit(0);
     });
   });

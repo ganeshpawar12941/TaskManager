@@ -1,12 +1,3 @@
-/**
- * src/middleware/validateRequest.js
- *
- * Express middleware that checks the result of express-validator chains
- * and responds with a 422 Unprocessable Entity error if any validations failed.
- *
- * Should be placed AFTER the validation chain arrays in route definitions:
- *   router.post('/', createTaskValidator, validateRequest, taskController.create)
- */
 
 'use strict';
 

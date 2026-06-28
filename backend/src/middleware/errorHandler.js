@@ -1,15 +1,8 @@
-/**
- * src/middleware/errorHandler.js
- *
- * Global Express error handling middleware.
- * Handles operational errors, Mongoose errors, and unexpected errors.
- */
-
 'use strict';
 
 const AppError = require('../utils/AppError');
 
-// ─── Error Type Handlers ───────────────────────────────────────────────────────
+
 
 /**
  * Handles Mongoose CastError (invalid ObjectId)
@@ -55,7 +48,7 @@ const handleJWTError = () =>
 const handleJWTExpiredError = () =>
   new AppError('Your token has expired. Please log in again.', 401);
 
-// ─── Response Senders ──────────────────────────────────────────────────────────
+
 
 /**
  * Development error response — includes full stack trace.
@@ -70,11 +63,7 @@ const sendErrorDev = (err, res) => {
   });
 };
 
-/**
- * Production error response — sends minimal information.
- * Operational errors: safe to send message.
- * Programming errors: generic message to prevent leaking internals.
- */
+
 const sendErrorProd = (err, res) => {
   if (err.isOperational) {
     res.status(err.statusCode).json({
@@ -84,7 +73,7 @@ const sendErrorProd = (err, res) => {
     });
   } else {
     // Log the error for debugging
-    console.error('💥 Unexpected Error:', err);
+    console.error(' Unexpected Error:', err);
     res.status(500).json({
       success: false,
       message: 'Something went very wrong. Please try again later.',
@@ -92,7 +81,6 @@ const sendErrorProd = (err, res) => {
   }
 };
 
-// ─── Global Error Handler ──────────────────────────────────────────────────────
 
 /**
  * Express 4-argument error middleware. Must come after all routes.
@@ -119,7 +107,6 @@ const errorHandler = (err, req, res, next) => {
   }
 };
 
-// ─── 404 Not Found Handler ─────────────────────────────────────────────────────
 
 /**
  * Catches requests to undefined routes and forwards a 404 error.

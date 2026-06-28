@@ -1,10 +1,3 @@
-/**
- * src/components/Task/TaskList.jsx
- *
- * Renders the grid of TaskCard components.
- * Handles loading, error, and empty states.
- */
-
 import React from 'react';
 import TaskCard from './TaskCard';
 import { TaskListSkeleton } from '../common/Skeleton';
@@ -12,17 +5,6 @@ import EmptyState from '../common/EmptyState';
 import ErrorMessage from '../common/ErrorMessage';
 import { ROUTES, EMPTY_STATE } from '../../utils/constants';
 
-/**
- * TaskList Component
- *
- * @param {object} props
- * @param {object[]} props.tasks - Array of task objects
- * @param {boolean} props.loading
- * @param {string|null} props.error
- * @param {Function} [props.onRetry]
- * @param {boolean} [props.isFiltered] - True if filters are active (changes empty state message)
- * @param {Function} [props.onClearFilters]
- */
 const TaskList = ({
   tasks,
   loading,
@@ -31,12 +13,10 @@ const TaskList = ({
   isFiltered = false,
   onClearFilters,
 }) => {
-  // ─── Loading State ────────────────────────────────────────────────────────
   if (loading) {
     return <TaskListSkeleton count={6} />;
   }
 
-  // ─── Error State ──────────────────────────────────────────────────────────
   if (error) {
     return (
       <ErrorMessage
@@ -47,7 +27,6 @@ const TaskList = ({
     );
   }
 
-  // ─── Empty State ──────────────────────────────────────────────────────────
   if (!tasks || tasks.length === 0) {
     if (isFiltered) {
       return (
@@ -73,7 +52,6 @@ const TaskList = ({
     );
   }
 
-  // ─── Task Grid ────────────────────────────────────────────────────────────
   return (
     <div
       className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"

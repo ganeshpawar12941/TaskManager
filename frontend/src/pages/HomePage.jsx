@@ -1,11 +1,3 @@
-/**
- * src/pages/HomePage.jsx
- *
- * Dashboard / landing page of the Task Tracker application.
- * Shows high-level statistics (total, completed, in-progress, pending, overdue)
- * and lists recent/urgent tasks with quick actions.
- */
-
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTaskContext } from '../context/TaskContext';
@@ -13,7 +5,6 @@ import StatCard from '../components/Task/StatCard';
 import TaskList from '../components/Task/TaskList';
 import { ROUTES } from '../utils/constants';
 
-// ─── Icons for Dashboard Stats ────────────────────────────────────────────────
 const TotalIcon = () => (
   <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
     <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
@@ -44,24 +35,20 @@ const OverdueIcon = () => (
   </svg>
 );
 
-// ─── HomePage ──────────────────────────────────────────────────────────────────
 const HomePage = () => {
   const { tasks, stats, loading, error, fetchTasks, fetchStats } = useTaskContext();
 
-  // Fetch stats and top 6 urgent tasks on mount
   useEffect(() => {
     fetchStats();
     fetchTasks({ sort: 'dueDate', limit: 6 });
   }, [fetchStats, fetchTasks]);
 
-  // Calculate completion percentage
   const totalTasks = stats?.total || 0;
   const completedTasks = stats?.byStatus?.completed || 0;
   const completionPercentage = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-      {/* ── Welcome Section ──────────────────────────────────────────────── */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
@@ -83,7 +70,6 @@ const HomePage = () => {
         </Link>
       </div>
 
-      {/* ── Stats Summary Row ────────────────────────────────────────────── */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
         <StatCard
           title="Total Tasks"
@@ -129,7 +115,6 @@ const HomePage = () => {
         />
       </div>
 
-      {/* ── Completion Progress Bar ──────────────────────────────────────── */}
       {totalTasks > 0 && (
         <div className="card p-6 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-1">
@@ -154,7 +139,6 @@ const HomePage = () => {
         </div>
       )}
 
-      {/* ── Recent / Urgent Tasks Section ────────────────────────────────── */}
       <div className="space-y-4">
         <div className="flex justify-between items-center">
           <h2 className="text-xl font-bold text-gray-900 dark:text-white">Urgent Tasks</h2>
